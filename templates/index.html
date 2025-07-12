@@ -1,0 +1,69 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Ranker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-white min-h-screen font-sans flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-700">Resume Ranker</h1>
+      {% if session.get('user') %}
+      <form action="{{ url_for('signout') }}" method="GET">
+        <button type="submit" class="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold transition">
+          Sign Out
+        </button>
+      </form>
+      {% else %}
+      <a href="{{ url_for('signup') }}" class="text-blue-700 font-semibold hover:underline">Sign Up</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex items-center justify-center p-6">
+    <div class="bg-white p-10 shadow-2xl rounded-2xl w-full max-w-xl">
+      <h2 class="text-3xl font-bold text-center text-blue-700 mb-6">Upload Resume</h2>
+      <p class="text-gray-600 text-center mb-6">Analyze and rank your resume among others using AI!</p>
+      <form action="/upload" method="POST" enctype="multipart/form-data" id="upload">
+
+        <label class="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
+        <input type="text" name="job_title" required placeholder="e.g. Data Scientist"
+               class="block w-full mb-6 border border-gray-300 rounded-md shadow-sm py-2 px-3 text-sm focus:ring-blue-500 focus:border-blue-500">
+
+        <label class="block text-sm font-medium text-gray-700 mb-2">Resume (PDF only)</label>
+        <input type="file" name="resume" accept=".pdf" required
+               class="block w-full mb-6 text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 transition">
+
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-lg font-semibold transition">
+          Analyze Resume
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white shadow-inner py-4">
+    <div class="text-center text-sm text-gray-500">
+      &copy; 2025 ResumeRanker. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>
